@@ -31,3 +31,4 @@ echo $converter->convertToHtml('path/to/file.md');
 
 [CommonMark]: http://commonmark.org/
 [CommonMark spec]: http://spec.commonmark.org/
+[Composer]: https://getcomposer.org/
