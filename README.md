@@ -15,3 +15,16 @@ This project can be installed via [Composer]:
 ``` bash
 $ composer require skizu/gitdown
 ```
+
+## Basic Usage
+
+The `GitDownConverter` class provides a simple wrapper for converting CommonMark files within a git to HTML:
+
+```php
+use Skizu/GitDown/GitDownConverter;
+
+$converter = new Converter('/path/to/repo');
+echo $converter->convertToHtml('path/to/file.md');
+
+// <h1>Hello World!</h1>
+```
