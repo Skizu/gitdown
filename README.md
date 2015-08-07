@@ -23,7 +23,7 @@ The `GitDownConverter` class provides a simple wrapper for converting CommonMark
 ```php
 use Skizu/GitDown/GitDownConverter;
 
-$converter = new Converter('/path/to/repo');
+$converter = new GitDownConverter('/path/to/repo');
 echo $converter->convertToHtml('path/to/file.md');
 
 // <h1>Hello World!</h1>
