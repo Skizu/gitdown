@@ -3,6 +3,7 @@
 use Gitonomy\Git\Exception\InvalidArgumentException as GitInvalidArgumentException;
 use Gitonomy\Git\Exception\ReferenceNotFoundException as GitReferenceNotFoundException;
 use Gitonomy\Git\Exception\RuntimeException as GitRuntimeException;
+use Gitonomy\Git\Tree;
 use Skizu\GitDown\Exception\InvalidArgumentException;
 use Skizu\GitDown\Exception\ReferenceNotFoundException;
 use Skizu\GitDown\Exception\RuntimeException;
@@ -86,7 +87,7 @@ class GitDownConverter
     private function getFile($fileName)
     {
         try {
-            return $this->commit->getTree()->getEntry($fileName);
+            return $this->getEntry($this->commit->getTree(), $fileName);
         } catch (GitReferenceNotFoundException $e) {
             throw new ReferenceNotFoundException($e->getMessage());
         } catch (GitInvalidArgumentException $e) {
@@ -94,4 +95,20 @@ class GitDownConverter
         }
     }
 
+    /**
+     * @param $tree Tree
+     * @param $filePath
+     * @return mixed
+     */
+    private function getEntry(Tree $tree, $filePath)
+    {
+        $entries = array_filter(explode('/', $filePath));
+
+        foreach ($entries as $entry) {
+            /** @var \Gitonomy\Git\Tree $tree */
+            $tree = $tree->getEntry($entry);
+        }
+
+        return $tree;
+    }
 }

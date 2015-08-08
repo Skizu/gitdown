@@ -19,6 +19,13 @@ class GitDownTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($html);
     }
 
+    public function testConvertToHtml_NestedFile_NotEmpty()
+    {
+        $html = $this->gitDown->convertToHTML('tests/samples/nested.md');
+
+        $this->assertNotEmpty($html);
+    }
+
     public function testConvertToHtml_PreviousCommit_FileMatch()
     {
         $this->gitDown->setCommit('6f89ec3cec587c4e734c9c411eb93d0b4b004b56');
@@ -54,5 +61,14 @@ class GitDownTest extends \PHPUnit_Framework_TestCase
     public function testGitDownConverter_FileNotFound_ExceptionThrown()
     {
         $this->gitDown->convertToHTML('fake_file');
+    }
+
+    /**
+     * @expectedException \Skizu\GitDown\Exception\InvalidArgumentException
+     * @expectedException \Skizu\GitDown\Exception\GitDownExceptionInterface
+     */
+    public function testGitDownConverter_NestedFileNotFound_ExceptionThrown()
+    {
+        $this->gitDown->convertToHTML('tests/fake_file');
     }
 }
