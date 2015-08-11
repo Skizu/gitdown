@@ -1,0 +1,41 @@
+{
+  "README.md": {
+    "names": {
+      "old": "README.md",
+      "new": "README.md"
+    },
+    "lines": [
+      "<span># skizu\/gitdown<\/span>",
+      "<span><\/span>",
+      "<span class=\"removed\">**skizu\/gitdown** combines git repos with a Markdown parser for PHP which supports the full [CommonMark] spec  <\/span>",
+      "<span class=\"add\">**skizu\/gitdown** combines git repos with a Markdown parser for PHP which supports the full [CommonMark] spec<\/span>",
+      "<span><\/span>",
+      "<span>## Goals<\/span>",
+      "<span><\/span>",
+      "<span class=\"removed\">* Fully support the CommonMark spec (100% compliance)<\/span>",
+      "<span class=\"add\">* Fully support the [CommonMark spec] (100% compliance)<\/span>",
+      "<span>* Provide an extensible git library integration component<\/span>",
+      "<span>* To be able to load, compare and parse versions of MarkDown files within a gitrepo   <\/span>",
+      "<span><\/span>",
+      "<span>``` bash<\/span>",
+      "<span>$ composer require skizu\/gitdown<\/span>",
+      "<span>```<\/span>",
+      "<span class=\"add\"><\/span>",
+      "<span class=\"add\">## Basic Usage<\/span>",
+      "<span class=\"add\"><\/span>",
+      "<span class=\"add\">The `GitDownConverter` class provides a simple wrapper for converting CommonMark files within a git to HTML:<\/span>",
+      "<span class=\"add\"><\/span>",
+      "<span class=\"add\">```php<\/span>",
+      "<span class=\"add\">use Skizu\/GitDown\/GitDownConverter;<\/span>",
+      "<span class=\"add\"><\/span>",
+      "<span class=\"add\">$converter = new Converter('\/path\/to\/repo');<\/span>",
+      "<span class=\"add\">echo $converter->convertToHtml('path\/to\/file.md');<\/span>",
+      "<span class=\"add\"><\/span>",
+      "<span class=\"add\">\/\/ <h1>Hello World!<\/h1><\/span>",
+      "<span class=\"add\">```<\/span>",
+      "<span class=\"add\"><\/span>",
+      "<span class=\"add\">[CommonMark]: http:\/\/commonmark.org\/<\/span>",
+      "<span class=\"add\">[CommonMark spec]: http:\/\/spec.commonmark.org\/<\/span>"
+    ]
+  }
+}

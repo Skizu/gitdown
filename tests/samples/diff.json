@@ -1,0 +1,41 @@
+{
+  "README.md": {
+    "names": {
+      "old": "README.md",
+      "new": "README.md"
+    },
+    "lines": [
+      " # skizu\/gitdown\n",
+      " \n",
+      "-**skizu\/gitdown** combines git repos with a Markdown parser for PHP which supports the full [CommonMark] spec  \n",
+      "+**skizu\/gitdown** combines git repos with a Markdown parser for PHP which supports the full [CommonMark] spec\n",
+      " \n",
+      " ## Goals\n",
+      " \n",
+      "-* Fully support the CommonMark spec (100% compliance)\n",
+      "+* Fully support the [CommonMark spec] (100% compliance)\n",
+      " * Provide an extensible git library integration component\n",
+      " * To be able to load, compare and parse versions of MarkDown files within a gitrepo   \n",
+      " \n",
+      " ``` bash\n",
+      " $ composer require skizu\/gitdown\n",
+      " ```\n",
+      "+\n",
+      "+## Basic Usage\n",
+      "+\n",
+      "+The `GitDownConverter` class provides a simple wrapper for converting CommonMark files within a git to HTML:\n",
+      "+\n",
+      "+```php\n",
+      "+use Skizu\/GitDown\/GitDownConverter;\n",
+      "+\n",
+      "+$converter = new Converter('\/path\/to\/repo');\n",
+      "+echo $converter->convertToHtml('path\/to\/file.md');\n",
+      "+\n",
+      "+\/\/ <h1>Hello World!<\/h1>\n",
+      "+```\n",
+      "+\n",
+      "+[CommonMark]: http:\/\/commonmark.org\/\n",
+      "+[CommonMark spec]: http:\/\/spec.commonmark.org\/\n"
+    ]
+  }
+}
