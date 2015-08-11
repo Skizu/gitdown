@@ -85,12 +85,12 @@ class GitDiff
 
             $changes = $file->getChanges();
             foreach ($changes as $change) {
-                $this->files[$file->getNewName()]['names']['old'] = $file->getOldName();
-                $this->files[$file->getNewName()]['names']['new'] = $file->getNewName();
+                $this->files[$file->getName()]['names']['old'] = $file->getOldName();
+                $this->files[$file->getName()]['names']['new'] = $file->getNewName();
                 foreach ($change->getLines() as $data) {
 
                     list ($type, $line) = $data;
-                    $this->files[$file->getNewName()]['lines'][] = $this->buildLine($type, $line);
+                    $this->files[$file->getName()]['lines'][] = $this->buildLine($type, $line);
                 }
             }
         }
