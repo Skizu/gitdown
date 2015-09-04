@@ -21,7 +21,7 @@ class GitDownConverter extends GitDown
      * @param $fileName string
      * @return \Gitonomy\Git\Blob
      */
-    private function getFile($fileName)
+    protected function getFile($fileName)
     {
         try {
             return $this->getEntry($this->commit->getTree(), $fileName);
