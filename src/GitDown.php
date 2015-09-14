@@ -1,7 +1,7 @@
 <?php namespace Skizu\GitDown;
 
 use Gitonomy\Git\Repository;
-use League\CommonMark\CommonMarkConverter;
+use Gitonomy\Git\Tree;
 use Gitonomy\Git\Exception\InvalidArgumentException as GitInvalidArgumentException;
 use Gitonomy\Git\Exception\ReferenceNotFoundException as GitReferenceNotFoundException;
 use Gitonomy\Git\Exception\RuntimeException as GitRuntimeException;
@@ -17,13 +17,6 @@ abstract class GitDown
      * @var \Gitonomy\Git\Repository
      */
     protected $repository;
-
-    /**
-     * The MarkDown converter instance.
-     *
-     * @var \League\CommonMark\Converter
-     */
-    protected $converter;
 
     /**
      * The git commit instance.
@@ -42,7 +35,6 @@ abstract class GitDown
     public function __construct($directory)
     {
         try {
-            $this->converter = new CommonMarkConverter();
             $this->repository = new Repository($directory);
             $this->commit = $this->repository->getHeadCommit();
         } catch (GitInvalidArgumentException $e) {
@@ -68,5 +60,37 @@ abstract class GitDown
         } catch (GitReferenceNotFoundException $e) {
             throw new ReferenceNotFoundException($e->getMessage());
         }
+    }
+
+    /**
+     * @param $fileName string
+     * @return \Gitonomy\Git\Blob
+     */
+    protected function getFile($fileName)
+    {
+        try {
+            return $this->getEntry($this->commit->getTree(), $fileName);
+        } catch (GitReferenceNotFoundException $e) {
+            throw new ReferenceNotFoundException($e->getMessage());
+        } catch (GitInvalidArgumentException $e) {
+            throw new InvalidArgumentException($e->getMessage());
+        }
+    }
+
+    /**
+     * @param $tree Tree
+     * @param $filePath
+     * @return mixed
+     */
+    private function getEntry(Tree $tree, $filePath)
+    {
+        $entries = array_filter(explode('/', $filePath));
+
+        foreach ($entries as $entry) {
+            /** @var \Gitonomy\Git\Tree $tree */
+            $tree = $tree->getEntry($entry);
+        }
+
+        return $tree;
     }
 }

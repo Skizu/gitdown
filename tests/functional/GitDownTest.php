@@ -12,28 +12,39 @@ class GitDownTest extends \PHPUnit_Framework_TestCase
         $this->gitDown = new GitDownConverter(__DIR__ . '/../..');
     }
 
-    public function testConvertToHtml_Head_NotEmpty()
+    public function testConvert_Head_NotEmpty()
     {
-        $html = $this->gitDown->convertToHTML('README.md');
+        $html = $this->gitDown->convert('README.md');
 
         $this->assertNotEmpty($html);
     }
 
-    public function testConvertToHtml_NestedFile_NotEmpty()
+    public function testConvert_NestedFile_NotEmpty()
     {
-        $html = $this->gitDown->convertToHTML('tests/samples/nested.md');
+        $html = $this->gitDown->convert('tests/samples/nested.md');
 
         $this->assertNotEmpty($html);
     }
 
-    public function testConvertToHtml_PreviousCommit_FileMatch()
+    public function testConvert_PreviousCommit_FileMatch()
     {
         $this->gitDown->setCommit('6f89ec3cec587c4e734c9c411eb93d0b4b004b56');
-        $html = $this->gitDown->convertToHTML('README.md');
+        $html = $this->gitDown->convert('README.md');
 
         $expected = file_get_contents(__DIR__ . '/../samples/6f89ec3cec587c4e734c9c411eb93d0b4b004b56/README.md');
 
         $this->assertEquals($expected, $html);
+    }
+
+    public function testConvert_XMLValidationCallBack_ValidXML()
+    {
+        $valid = $this->gitDown->convert('phpunit.xml', function($file) {
+            $doc = new \DOMDocument();
+            $doc->loadXML($file);
+            return $doc->schemaValidate(__DIR__ . '/../samples/phpunit.xsd');
+        });
+
+        $this->assertEquals(true, $valid);
     }
 
     /**
@@ -60,7 +71,7 @@ class GitDownTest extends \PHPUnit_Framework_TestCase
      */
     public function testGitDownConverter_FileNotFound_ExceptionThrown()
     {
-        $this->gitDown->convertToHTML('fake_file');
+        $this->gitDown->convert('fake_file');
     }
 
     /**
@@ -69,6 +80,6 @@ class GitDownTest extends \PHPUnit_Framework_TestCase
      */
     public function testGitDownConverter_NestedFileNotFound_ExceptionThrown()
     {
-        $this->gitDown->convertToHTML('tests/fake_file');
+        $this->gitDown->convert('tests/fake_file');
     }
 }

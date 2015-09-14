@@ -1,51 +1,24 @@
 <?php namespace Skizu\GitDown;
 
-use Gitonomy\Git\Tree;
-use Gitonomy\Git\Exception\InvalidArgumentException as GitInvalidArgumentException;
-use Gitonomy\Git\Exception\ReferenceNotFoundException as GitReferenceNotFoundException;
-use Skizu\GitDown\Exception\InvalidArgumentException;
-use Skizu\GitDown\Exception\ReferenceNotFoundException;
+use Closure;
+
 
 class GitDownConverter extends GitDown
 {
+    use Converters\Markdown;
+
     /**
      * @param $fileName
+     * @param Closure $cb
      * @return string
      */
-    public function convertToHTML($fileName)
+    public function convert($fileName, Closure $cb=null)
     {
-        return $this->converter->convertToHtml($this->getFile($fileName)->getContent());
-    }
+        $file = $this->getFile($fileName)->getContent();
 
-    /**
-     * @param $fileName string
-     * @return \Gitonomy\Git\Blob
-     */
-    protected function getFile($fileName)
-    {
-        try {
-            return $this->getEntry($this->commit->getTree(), $fileName);
-        } catch (GitReferenceNotFoundException $e) {
-            throw new ReferenceNotFoundException($e->getMessage());
-        } catch (GitInvalidArgumentException $e) {
-            throw new InvalidArgumentException($e->getMessage());
-        }
-    }
+        if($cb == null)
+            $cb = $this->MarkDownConverter();
 
-    /**
-     * @param $tree Tree
-     * @param $filePath
-     * @return mixed
-     */
-    private function getEntry(Tree $tree, $filePath)
-    {
-        $entries = array_filter(explode('/', $filePath));
-
-        foreach ($entries as $entry) {
-            /** @var \Gitonomy\Git\Tree $tree */
-            $tree = $tree->getEntry($entry);
-        }
-
-        return $tree;
+        return $cb($file);
     }
 }
