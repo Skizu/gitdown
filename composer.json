@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=5.4.8",
-        "league/commonmark": "0.10.0",
+        "league/commonmark": "~0.10",
         "gitonomy/gitlib": "v0.1.7"
 
     },
